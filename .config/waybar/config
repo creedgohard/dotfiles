@@ -1,0 +1,106 @@
+[
+{
+    "layer": "top",
+    "position": "top",
+    "height": 28,
+    "modules-left": ["hyprland/workspaces", "memory", "network"],
+    "modules-center": ["custom/prev", "mpris", "custom/pause", "custom/next"],
+    "modules-right": ["cpu", "temperature", "custom/gpuusage", "custom/gputemp"],
+
+    "hyprland/workspaces": { "format": "{id}", "on-click": "activate" },
+
+    "mpris": {
+        "format": "{player_icon} {title}",
+        "player-icons": { "default": "󰎆" },
+        "on-click": "python3 /home/creed/.config/waybar/modules/mediaplayer_popup.py"
+    },
+
+    "custom/prev": {
+        "format": "󰒮",
+        "on-click": "playerctl previous",
+        "tooltip": false
+    },
+    "custom/pause": {
+        "exec": "playerctl status 2>/dev/null | grep -q Playing && echo '' || echo ''",
+        "interval": 2,
+        "format": "{}",
+        "on-click": "playerctl play-pause",
+        "tooltip": false
+    },
+    "custom/next": {
+        "format": "󰒭",
+        "on-click": "playerctl next",
+        "tooltip": false
+    },
+
+    "cpu": {
+        "format": "  CPU {usage}%",
+        "interval": 3,
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+    },
+    "temperature": {
+        "format": "  {temperatureC}°C",
+        "interval": 3,
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+    },
+    "custom/gpuusage": {
+        "exec": "cat /sys/class/drm/card*/device/gpu_busy_percent 2>/dev/null | head -1 | xargs printf '  GPU %s%%'",
+        "interval": 3,
+        "format": "{}",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+    },
+    "custom/gputemp": {
+        "exec": "sensors | grep -A0 'junction' | head -1 | awk '{print $2}' | tr -d '+°C' | xargs printf '  %s°C'",
+        "interval": 3,
+        "format": "{}",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+    },
+
+    "memory": {
+        "format": "  RAM {percentage}%",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+    },
+    "network": { "format-ethernet": "󰈀 {bandwidthDownBytes} ↓ {bandwidthUpBytes} ↑", "tooltip": false }
+},
+{
+    "layer": "bottom",
+    "position": "bottom",
+    "height": 34,
+    "modules-left": ["custom/power", "custom/launcher"],
+    "modules-center": ["custom/firefox", "custom/steam", "custom/vesktop", "custom/dolphin", "custom/youtubemusic", "custom/settings"],
+    "modules-right": ["tray", "wireplumber", "clock"],
+
+    "custom/power": {
+        "format": "",
+        "on-click": "wlogout --protocol xdg --no-span --layout ~/.config/wlogout/layout --css ~/.config/wlogout/style.css -b 1 -L 20 -R 2200 -T 1100 -B 40 --buttons-per-row 3",
+        "tooltip": false
+    },
+
+    "tray": { "icon-size": 15, "spacing": 10, "show-passive-items": true },
+
+    "custom/launcher":     { "format": "󰀻", "on-click": "wofi --show drun --style ~/.config/wofi/style.css" },
+    "custom/firefox":      { "format": "",  "on-click": "firefox" },
+    "custom/steam":        { "format": "",  "on-click": "steam" },
+    "custom/vesktop":      { "format": "",  "on-click": "vesktop" },
+    "custom/dolphin":      { "format": "󰉋", "on-click": "dolphin" },
+    "custom/youtubemusic": { "format": "󰎆", "on-click": "youtubemusic" },
+    "custom/settings":     { "format": "",  "on-click": "systemsettings" },
+
+    "wireplumber": {
+    "format": "󰕾 {volume}%",
+    "format-icons": ["", "", ""],
+    "on-click": "python3 /home/creed/.config/waybar/modules/volume_popup.py --cx $(hyprctl cursorpos | cut -d',' -f1) --cy $(hyprctl cursorpos | cut -d',' -f2)",
+    "tooltip": false
+    },
+
+    "clock": {
+        "format": " {:%d/%m/%Y  %H:%M}",
+        "on-click": "~/.config/hypr/scripts/toggle-calendar.sh"
+    }
+}
+]

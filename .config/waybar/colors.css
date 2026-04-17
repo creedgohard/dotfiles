@@ -1,0 +1,9 @@
+@define-color background         #000000;
+@define-color foreground         #de99cb;
+@define-color accent             #d9006e;
+@define-color accent2            #0046ab;
+@define-color accent3            #fe0f9b;
+@define-color inactive           #6b005b;
+@define-color warning            #ab0066;
+@define-color urgent             #6b005b;
+@define-color accent-transparent rgba(217, 0, 110, 0.5);

@@ -1,0 +1,75 @@
+/* ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+ * ┃                       Waybar & wlogout CSS                 ┃
+ * ┃         pywal-integrated — colours update automatically    ┃
+ * ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ */
+
+/* Import pywal-generated colours — auto-regenerated on wallpaper change */
+@import "colors.css";
+
+* {
+    font-family: "0xProto Nerd Font", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* Waybar Main Window Styling */
+window#waybar {
+    /* Using @background makes the bar match the popup window depth */
+    background-color: @background;
+    /* Using @foreground matches the 'Calendar Numbers' exactly */
+    color: @foreground;
+}
+
+/* Power button — always accent coloured */
+#custom-power {
+font-size: 20px;
+padding: 0 15px;
+color: @accent;
+transition: color 0.2s ease;
+}
+
+/* App launcher icons */
+#custom-launcher, #custom-firefox, #custom-steam,
+#custom-vesktop, #custom-dolphin, #custom-youtubemusic, #custom-settings, #taskbar button {
+font-size: 20px;
+padding: 0 15px;
+/* Matches the popup text instead of pure white */
+color: @foreground;
+transition: color 0.2s ease;
+}
+
+/* Hover — all icons glow with accent colour */
+#custom-power:hover, #custom-launcher:hover, #custom-firefox:hover,
+#custom-steam:hover, #custom-vesktop:hover, #custom-dolphin:hover,
+#custom-youtubemusic:hover, #custom-settings:hover, #taskbar button:hover {
+color: @accent;
+background-color: transparent;
+}
+
+/* Media player — accent coloured */
+#mpris {
+color: @accent;
+padding: 0 15px;
+}
+
+/* Workspaces */
+#workspaces button {
+/* Uses the 'dim' color (color8) for inactive workspaces */
+color: @color8;
+padding: 0 8px;
+}
+
+#workspaces button.active {
+color: @accent;
+border-bottom: 2px solid @accent;
+}
+
+/* System info modules */
+#cpu, #memory, #network, #tray, #wireplumber, #clock {
+padding: 0 10px;
+/* Matches the 'foreground' used in the sysinfo popup labels */
+color: @foreground;
+}

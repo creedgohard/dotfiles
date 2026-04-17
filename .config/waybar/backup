@@ -1,0 +1,116 @@
+[
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["mpris"],
+    "modules-right": ["tray", "cpu", "memory", "network"],
+    "hyprland/workspaces": { "format": "{id}", "on-click": "activate" },
+    "mpris": { "format": "<span color='#dc143c'>{player_icon} {title}</span>", "player-icons": { "default": "󰎆" } },
+    "cpu": { "format": "CPU {usage}%" },
+    "memory": { "format": "RAM {percentage}%" },
+    "network": { "format-wifi": "" },
+    "tray": { "icon-size": 15, "spacing": 10 }
+},
+{
+    "layer": "bottom",
+    "position": "bottom",
+    "height": 34,
+    "modules-left": ["custom/power", "custom/launcher"],
+    "modules-center": ["custom/firefox", "custom/steam", "custom/vesktop", "custom/dolphin", "custom/sone", "custom/settings"],
+    "modules-right": ["wlr/taskbar", "wireplumber", "clock"],
+    "wlr/taskbar": { "format": "{icon}", "icon-size": 20, "on-click": "activate" },
+    "custom/power": {
+    "format": "",
+    "on-click": "wlogout -b 1 -c 0 -r 0 -m 0 -L 30 -R 2200 -T 1000 -B 60",
+    "tooltip": false
+  },
+    "custom/launcher": { "format": "󰀻", "on-click": "wofi --show drun" },
+    "custom/firefox": { "format": "", "on-click": "firefox" },
+    "custom/steam": { "format": "", "on-click": "steam" },
+    "custom/vesktop": { "format": "", "on-click": "vesktop" },
+    "custom/dolphin": { "format": "󰉋", "on-click": "dolphin" },
+    "custom/sone": { "format": "󰎆", "on-click": "flatpak run io.github.lullabyX.sone" },
+    "custom/settings": { "format": "", "on-click": "systemsettings" },
+    "wireplumber": { "format": "󰕾 {volume}%" },
+    "clock": { "format": " {:%H:%M}" }
+}
+]
+
+CSS
+
+* {
+font-family: "0xProto Nerd Font", sans-serif;
+font-size: 13px;
+font-weight: bold;
+margin: 0;
+padding: 0;
+border: none;
+}
+
+window#waybar {
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #ffffff;
+}
+
+/* Base style for icons */
+#custom-power, #custom-launcher, #custom-firefox, #custom-steam,
+#custom-vesktop, #custom-dolphin, #custom-sone, #custom-settings, #taskbar button {
+font-size: 20px;
+padding: 0 15px;
+color: #ffffff;
+transition: color 0.2s ease;
+}
+
+/* Crimson Color-Only hover effect */
+#custom-power:hover, #custom-launcher:hover, #custom-firefox:hover,
+#custom-steam:hover, #custom-vesktop:hover, #custom-dolphin:hover,
+#custom-sone:hover, #custom-settings:hover, #taskbar button:hover {
+color: #dc143c; /* Crimson Red */
+background-color: transparent;
+}
+
+#mpris {
+color: #dc143c; /* Crimson Red */
+padding: 0 15px;
+}
+
+#workspaces button {
+color: #444444;
+padding: 0 8px;
+}
+
+#workspaces button.active {
+color: #dc143c; /* Crimson Red */
+border-bottom: 2px solid #dc143c;
+}
+
+#cpu, #memory, #network, #tray, #wireplumber, #clock {
+padding: 0 10px;
+color: #ffffff;
+}
+
+window {
+    background-color: rgba(0, 0, 0, 0); /* Keeps the rest of the screen transparent */
+}
+
+grid {
+    background-color: rgba(17, 24, 38, 0.95); /* Matches your bar background */
+    border: 2px solid #dc143c; /* Crimson border */
+    border-radius: 12px;
+    margin: 10px;
+}
+
+button {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.05);
+    margin: 5px;
+}
+
+button:hover {
+    background-color: rgba(220, 20, 60, 0.2); /* Crimson hover effect */
+}
