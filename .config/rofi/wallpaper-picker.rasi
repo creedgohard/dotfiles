@@ -1,0 +1,54 @@
+* {
+    background-color: rgba(0, 0, 0, 0.92);
+    text-color:       #ffffff;
+    border-color:     #dc143c;
+    font:             "0xProto Nerd Font 11";
+}
+
+window {
+    border:        2px;
+    border-radius: 12px;
+    width:         80%;
+    height:        80%;
+}
+
+inputbar {
+    padding:       8px 12px;
+    border:        0 0 2px 0;
+}
+
+prompt {
+    text-color: #dc143c;
+}
+
+entry {
+    placeholder: "Search wallpapers...";
+    placeholder-color: rgba(255,255,255,0.3);
+}
+
+listview {
+    columns:   4;
+    lines:     2;
+    spacing:   8px;
+    padding:   8px;
+    scrollbar: false;
+}
+
+element {
+    padding:       6px;
+    border-radius: 8px;
+    orientation:   vertical;
+}
+
+element selected {
+    background-color: rgba(220, 20, 60, 0.35);
+    border:           2px;
+}
+
+element-icon {
+    size: 200px;
+}
+
+element-text {
+    horizontal-align: 0.5;
+}

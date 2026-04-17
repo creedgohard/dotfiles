@@ -1,0 +1,50 @@
+/* ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+ * ┃                          wofi CSS                          ┃
+ * ┃         pywal-integrated — colours update automatically    ┃
+ * ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ */
+
+/* Import pywal-generated colours */
+@import "/home/creed/.config/waybar/colors.css";
+
+window {
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid @accent;
+    border-radius: 12px;
+}
+
+#input {
+background-color: rgba(255, 255, 255, 0.05);
+color: #ffffff;
+border: 1px solid @accent;
+border-radius: 8px;
+padding: 8px 12px;
+margin: 8px;
+font-family: "0xProto Nerd Font";
+font-size: 14px;
+}
+
+#input:focus {
+border-color: @accent;
+box-shadow: 0 0 8px @accent-transparent;
+}
+
+#outer-box {
+padding: 8px;
+}
+
+#entry {
+padding: 6px 10px;
+border-radius: 6px;
+color: #ffffff;
+}
+
+#entry:selected {
+background-color: @accent-transparent;
+color: #ffffff;
+}
+
+#text {
+font-family: "0xProto Nerd Font";
+font-size: 13px;
+color: #ffffff;
+}
