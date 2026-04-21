@@ -286,15 +286,15 @@ pkill -SIGUSR2 waybar || waybar &
 # ── 9. wofi and wlogout read colors.css via @import — nothing extra needed ──
 
 # ── 10. Reload mako notification colours ──
-if command -v makoctl &>/dev/null; then
-    mkdir -p "$HOME/.config/mako"
-    cat > "$HOME/.config/mako/colors" << EOF
-background-color=${BG}
-text-color=${LIGHT_ACCENT}
-border-color=${ACCENT}
-EOF
-    makoctl reload 2>/dev/null || true
-fi
+#if command -v makoctl &>/dev/null; then
+   # mkdir -p "$HOME/.config/mako"
+    #cat > "$HOME/.config/mako/colors" << EOF
+#background-color=${BG}
+#text-color=${LIGHT_ACCENT}
+#border-color=${ACCENT}
+#EOF
+   # makoctl reload 2>/dev/null || true
+#fi
 
 # ── 11. Sync wpgtk for GTK apps (pavucontrol) ──
 if command -v wpg &>/dev/null; then
@@ -310,3 +310,12 @@ echo "  Accent: $ACCENT | Light Accent: $LIGHT_ACCENT | BG: $BG"
 
 # ── Reload kitty colours live ──
 pkill -USR1 kitty 2>/dev/null || true
+
+# ── 13. Reload SwayNC CSS live ──
+if command -v swaync-client &>/dev/null; then
+    # Create a tiny shim so SwayNC knows what LIGHT_ACCENT is
+    mkdir -p "$HOME/.cache/swaync"
+    echo "@define-color light-accent ${LIGHT_ACCENT};" > "$HOME/.cache/swaync/colors.css"
+
+    swaync-client -rs
+fi
