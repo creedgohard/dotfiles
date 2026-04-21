@@ -89,7 +89,7 @@
     "custom/vesktop":      { "format": "",  "on-click": "vesktop" },
     "custom/dolphin":      { "format": "󰉋", "on-click": "dolphin" },
     "custom/youtubemusic": { "format": "󰎆", "on-click": "youtubemusic" },
-    "custom/settings":     { "format": "",  "on-click": "systemsettings" },
+    "custom/settings":     { "format": "",  "on-click": "dolphin ~/.config/hypr/"},
 
     "wireplumber": {
     "format": "󰕾 {volume}%",
