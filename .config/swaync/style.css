@@ -1,0 +1,98 @@
+@import "../../.cache/wal/colors.css";
+@import "../../.cache/swaync/colors.css"; /* Add this line */
+:root {
+  /* Main Backgrounds - Made solid for legibility */
+  --cc-bg: var(--background);
+  --noti-bg: var(--background);
+
+  /* Borders and Selection */
+  --noti-border-color: var(--color1);
+  --bg-selected: var(--color1);
+
+  /* Hover and Focus States */
+  --noti-bg-hover: var(--color2);
+  --noti-bg-focus: var(--color2);
+  --noti-bg-darker: var(--color0);
+
+  /* Text Colors */
+  --text-color: var(--foreground);
+  --text-color-disabled: var(--color8);
+
+  /* Close Button */
+  --noti-close-bg: var(--color1);
+  --noti-close-bg-hover: var(--color2);
+
+  /* Functional Sizes */
+  --notification-icon-size: 64px;
+  --notification-app-icon-size: calc(var(--notification-icon-size) / 3);
+  --notification-group-icon-size: 32px;
+  --border: 1px solid var(--noti-border-color);
+  --border-radius: 12px;
+  --font-size-body: 15px;
+  --font-size-summary: 16px;
+  --hover-transition: background 0.15s ease-in-out;
+}
+
+/* --- THEME OVERRIDES --- */
+notificationwindow, blankwindow {
+  background: transparent;
+}
+
+.control-center {
+  background: var(--cc-bg);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  border: var(--border);
+}
+
+.notification-row .notification-background .notification {
+  border-radius: var(--border-radius);
+  border: var(--border);
+  padding: 0;
+  transition: var(--hover-transition);
+  /* Solid background for legibility over Kitty */
+  background: var(--noti-bg);
+}
+
+.notification-row .notification-background .notification .notification-default-action {
+  color: var(--text-color);
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary,
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time,
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
+  color: var(--text-color);
+}
+
+/* --- WIDGETS --- */
+.widget-title > label { color: var(--text-color); }
+.widget-dnd label { color: var(--text-color); }
+
+/* KEEPING ALL YOUR LAYOUT RULES BELOW */
+.close-button {
+  background: var(--noti-close-bg);
+  color: var(--text-color);
+  padding: 0;
+  border-radius: 100%;
+  margin-top: 8px;
+  margin-right: 8px;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .image {
+  -gtk-icon-size: var(--notification-icon-size);
+  border-radius: 100px;
+  margin: 4px;
+}
+
+/* VOLUME & SLIDERS */
+.widget-volume row image {
+  -gtk-icon-size: 24px;
+}
+
+.per-app-volume {
+  background-color: var(--noti-bg-darker);
+  margin: 8px;
+  border-radius: var(--border-radius);
+}
