@@ -1,9 +1,9 @@
 @define-color background         #000000;
-@define-color foreground         #f7cce2;
-@define-color accent             #d9006e;
-@define-color accent2            #0046ab;
-@define-color accent3            #fe0f9b;
-@define-color inactive           #6b005b;
-@define-color warning            #ab0066;
-@define-color urgent             #6b005b;
-@define-color accent-transparent rgba(217, 0, 110, 0.5);
+@define-color foreground         #edd4ff;
+@define-color accent             #a728ff;
+@define-color accent2            #6600f3;
+@define-color accent3            #f37cff;
+@define-color inactive           #6700e8;
+@define-color warning            #d611fe;
+@define-color urgent             #6700e8;
+@define-color accent-transparent rgba(167, 40, 255, 0.5);

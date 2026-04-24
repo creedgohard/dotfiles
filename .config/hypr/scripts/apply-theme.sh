@@ -39,6 +39,9 @@ ACCENT="${color4}"     # Primary accent
 INACTIVE="${color1}"   # Dark tone for inactive borders
 SPLASH="${color6}"     # Bright tone for splash text
 
+# Create a direct image symlink that hyprlock can actually read
+ln -sf "$WALLPAPER" "$HOME/.cache/wal/lockscreen.png"
+
 # ── Helper functions ──
 
 # hex #RRGGBB → "R,G,B" for KDE color scheme files
@@ -319,3 +322,5 @@ if command -v swaync-client &>/dev/null; then
 
     swaync-client -rs
 fi
+
+
