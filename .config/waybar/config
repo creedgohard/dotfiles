@@ -5,11 +5,20 @@
     "position": "top",
     "height": 28,
     "output": ["DP-1", "DP-2"],
-    "modules-left": ["hyprland/workspaces", "memory", "network"],
+    "modules-left": ["hyprland/workspaces"],
     "modules-center": ["custom/prev", "mpris", "custom/pause", "custom/next"],
-    "modules-right": ["cpu", "temperature", "custom/gpuusage", "custom/gputemp"],
+    "modules-right": ["memory", "cpu", "temperature", "custom/gpuusage", "custom/gputemp"],
 
-    "hyprland/workspaces": { "format": "{id}", "on-click": "activate" },
+    "hyprland/workspaces": {
+    "format": "{id}",
+    "on-click": "activate",
+    "all-outputs": false, // This ensures Monitor 1 doesn't show Monitor 2's workspaces
+    "persistent-workspaces": {
+        "DP-1": [1, 2, 3], // Workspaces 1, 2, and 3 will always stay on DP-1[cite: 17]
+        "DP-2": [4, 5, 6]  // Workspaces 4, 5, and 6 will always stay on DP-2[cite: 17]
+    }
+},
+
     "mpris": {
         "format": "{player_icon} {title}",
         "player-icons": { "default": "󰎆" },
@@ -23,20 +32,33 @@
         "tooltip": false
     },
     "custom/next": { "format": "󰒭", "on-click": "playerctl next", "tooltip": false },
-    "cpu": { "format": "  CPU {usage}%", "interval": 3, "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh" },
-    "temperature": { "format": "  {temperatureC}°C", "interval": 3, "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh" },
-    "custom/gpuusage": {
-        "exec": "cat /sys/class/drm/card*/device/gpu_busy_percent 2>/dev/null | head -1 | xargs printf '  GPU %s%%'",
-        "interval": 3,
-        "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
-    },
-    "custom/gputemp": {
-        "exec": "sensors | grep -A0 'junction' | head -1 | awk '{print $2}' | tr -d '+°C' | xargs printf '  %s°C'",
-        "interval": 3,
-        "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
-    },
-    "memory": { "format": "  RAM {percentage}%", "interval": 3, "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh" },
-    "network": { "format-ethernet": "󰈀 {bandwidthDownBytes} ↓ {bandwidthUpBytes} ↑", "tooltip": false }
+
+    "cpu": {
+    "format": "CPU {usage}%", // Removed leading spaces[cite: 17]
+    "interval": 3,
+    "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+},
+"temperature": {
+    "format": "{temperatureC}°C", // Removed leading spaces[cite: 17]
+    "interval": 3,
+    "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+},
+"custom/gpuusage": {
+    "exec": "cat /sys/class/drm/card*/device/gpu_busy_percent 2>/dev/null | head -1 | xargs printf 'GPU %s%%'", // Removed leading spaces[cite: 17]
+    "interval": 3,
+    "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+},
+"custom/gputemp": {
+    "exec": "sensors | grep -A0 'junction' | head -1 | awk '{print $2}' | tr -d '+°C' | xargs printf '%s°C'", // Removed leading spaces[cite: 17]
+    "interval": 3,
+    "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+},
+"memory": {
+    "format": "RAM {percentage}%", // Removed leading spaces[cite: 17]
+    "interval": 3,
+    "on-click": "~/.config/hypr/scripts/toggle-sysinfo.sh"
+},
+
 },
 {
     "name": "bottom-bar",
@@ -46,7 +68,7 @@
     "output": ["DP-1", "DP-2"],
     "modules-left": ["custom/power", "custom/launcher"],
     "modules-center": ["custom/firefox", "custom/steam", "custom/vesktop", "custom/dolphin", "custom/youtubemusic", "custom/settings"],
-    "modules-right": ["tray", "wireplumber", "clock"],
+    "modules-right": ["tray", "wireplumber", "network", "clock"],
 
     "custom/power": {
         "format": "",
@@ -60,6 +82,13 @@
     "custom/dolphin":      { "format": "󰉋", "on-click": "dolphin" },
     "custom/youtubemusic": { "format": "󰎆", "on-click": "youtubemusic" },
     "custom/settings":     { "format": "", "on-click": "dolphin ~/.config/hypr/"},
+    "network": {
+    "format-wifi": "  Connected",
+    "format-ethernet": " Connected",
+    "format-disconnected": "󰤮 Disconnected",
+    "tooltip": false,
+    "on-click": "/home/creed/.config/hypr/scripts/toggle-network.sh"
+},
     "wireplumber": {
         "format": "󰕾 {volume}%",
         "format-icons": ["", "", ""],

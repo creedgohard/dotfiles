@@ -6,8 +6,8 @@ from gi.repository import Gtk, Gdk, GLib, Pango
 import json, os, subprocess, argparse
 
 WM_CLASS = 'waybar-volume'
-BAR_H    = 36
-PAD      = 8
+BAR_H    = 28
+PAD      = 0
 
 GLib.set_prgname(WM_CLASS)
 
@@ -111,10 +111,11 @@ class VolumePopup(Gtk.Window):
         css = f"""
         #volume-window {{
             background-color: {self.c['background']};
-            border: 2px solid {self.c['accent']};
-            border-radius: 12px;
+            border: 1px solid {self.c['accent']};
+            border-bottom: 0px;
+            margin-bottom: -2px;
+            border-radius: 10px 10px 0 0;
         }}
-
         /* 1. VOLUME BAR - Kill background images and focus rings */
         scale trough {{
             background-color: {self.c['dim']};

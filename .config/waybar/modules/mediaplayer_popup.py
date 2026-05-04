@@ -8,8 +8,8 @@ from gi.repository import Gtk, Gdk, GdkPixbuf, GLib, Playerctl
 import json, os, subprocess, threading, urllib.request, tempfile
 
 WM_CLASS = 'waybar-mediaplayer'
-BAR_H    = 32
-PAD      = 8
+BAR_H    = 28
+PAD      = 0
 
 GLib.set_prgname(WM_CLASS)
 
@@ -25,6 +25,7 @@ class MediaPopup(Gtk.Window):
 
         # Create Layout
         self.root = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
+        self.root.set_size_request(350, -1)
         self.root.set_name("main-root")
         self.root.set_property("margin", 15)
         self.add(self.root)
@@ -111,12 +112,37 @@ class MediaPopup(Gtk.Window):
 
         # FIX: We apply the background to the WINDOW widget (#popup-window)
         # to eliminate the default grey GTK background.
+        # --- Clean Multi-line CSS ---
         css = f"""
-        #popup-window {{ background-color: {self.c['background']}; border: 2px solid {self.c['accent']}; border-radius: 12px; }}
-        label#title {{ color: {self.c['accent']}; font-weight: bold; font-size: 14px; font-family: "0xProto Nerd Font"; }}
-        label#artist {{ color: {self.c['foreground']}; font-size: 12px; opacity: 0.8; font-family: "0xProto Nerd Font"; }}
-        button#btn {{ background: transparent; border: none; color: {self.c['foreground']}; font-size: 20px; box-shadow: none; }}
-        button#btn:hover {{ color: {self.c['accent']}; }}
+        #popup-window {{
+            background-color: {self.c['background']};
+            border: 1px solid {self.c['accent']};
+            border-top: 0px solid {self.c['accent']};
+            margin-top: -2px;           /* Overlap the bar */
+            border-radius: 0 0 10px 10px; /* Round only the bottom */
+        }}
+        label#title {{
+            color: {self.c['accent']};
+            font-weight: bold;
+            font-size: 14px;
+            font-family: "0xProto Nerd Font";
+        }}
+        label#artist {{
+            color: {self.c['foreground']};
+            font-size: 12px;
+            opacity: 0.8;
+            font-family: "0xProto Nerd Font";
+        }}
+        button#btn {{
+            background: transparent;
+            border: none;
+            color: {self.c['foreground']};
+            font-size: 20px;
+            box-shadow: none;
+        }}
+        button#btn:hover {{
+            color: {self.c['accent']};
+        }}
         """
         provider = Gtk.CssProvider()
         provider.load_from_data(css.encode())
@@ -161,14 +187,40 @@ class MediaPopup(Gtk.Window):
             GLib.idle_add(self.art_image.set_from_pixbuf, pix)
         except: pass
 
+    # --- Precise Positioning Logic ---
     def _do_pos(self):
         try:
+            # 1. Get Monitor Data
+            mon_data = json.loads(subprocess.check_output(['hyprctl', 'monitors', '-j']))
+            active_mon = next(m for m in mon_data if m['focused'])
+            mon_y = active_mon['y']
+
+            # 2. Get actual Waybar height from layers (kills the gap)
+            layers = json.loads(subprocess.check_output(['hyprctl', 'layers', '-j']))
+            # Find the waybar layer on the current monitor
+            waybar_layer = None
+            mon_name = active_mon['name']
+            if mon_name in layers:
+                for layer in layers[mon_name]['levels']['0']:
+                    if layer['namespace'] == 'waybar':
+                        waybar_layer = layer
+                        break
+
+            # Use the actual reserved top margin, or fallback to your BAR_H if not found
+            actual_bar_h = waybar_layer['margin'][0] if waybar_layer else BAR_H
+
+            # 3. Calculate Coordinates
             out = subprocess.check_output(['hyprctl', 'cursorpos']).decode().strip()
             cur_x = int(out.split(',')[0])
             req = self.get_preferred_size()[1]
             x = cur_x - (req.width // 2)
-            subprocess.Popen(['hyprctl', 'dispatch', 'movewindowpixel', f'exact {x} {BAR_H+PAD},class:{WM_CLASS}'])
-        except: pass
+
+            # Move exactly to the edge of the bar
+            target_y = mon_y + actual_bar_h
+
+            subprocess.Popen(['hyprctl', 'dispatch', 'movewindowpixel', f'exact {x} {target_y},class:{WM_CLASS}'])
+        except Exception as e:
+            print(f"Positioning failed: {e}")
 
     def _on_leave(self, widget, event):
         if event.detail != Gdk.NotifyType.INFERIOR:

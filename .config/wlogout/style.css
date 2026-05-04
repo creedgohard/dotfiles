@@ -12,7 +12,7 @@ window {
 
 grid {
     background-color: rgba(0, 0, 0, 0.95);
-    border: 2px solid @accent;
+    border: 1px solid @accent;
     border-radius: 12px;
     padding: 10px;
 }
@@ -20,7 +20,7 @@ grid {
 button {
     background-color: rgba(0, 0, 0, 0.95);
     color: #ffffff;
-    border: 2px solid @accent;
+    border: 1px solid @accent;
     border-radius: 8px;
     margin: 5px;
     min-width: 100px;

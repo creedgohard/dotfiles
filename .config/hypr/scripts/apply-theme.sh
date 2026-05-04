@@ -261,11 +261,11 @@ dbus-send --session --dest=org.kde.plasmashell /PlasmaShell \
 # Only restart Dolphin if the user actually has it open as a window
 # pgrep -x matches exact process name; we check for a window via wmctrl-style
 # fallback: check if dolphin has an open file manager window, not just KIO workers
-if pgrep -x dolphin > /dev/null; then
-    pkill -x dolphin
-    sleep 0.5
-    dolphin &
-fi
+#if pgrep -x dolphin > /dev/null; then
+   # pkill -x dolphin
+    #sleep 0.5
+    #dolphin &
+#fi
 
 # ── 8. Reload Waybar with new colours ──
 # foreground uses LIGHT_ACCENT — a 60%-lightened tint of the accent
@@ -283,8 +283,8 @@ cat > "$HOME/.config/waybar/colors.css" << EOF
 @define-color accent-transparent rgba(${ACCENT_RGB}, 0.5);
 EOF
 
-# Restart waybar and re-register tray icons
-pkill -SIGUSR2 waybar || waybar &
+# Restart waybar safely using the master script
+nohup ~/.config/hypr/scripts/reload-waybar.sh >/dev/null 2>&1 & disown
 
 # ── 9. wofi and wlogout read colors.css via @import — nothing extra needed ──
 

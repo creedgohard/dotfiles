@@ -6,6 +6,7 @@
 /* Import pywal-generated colours — auto-regenerated on wallpaper change */
 @import "colors.css";
 
+
 * {
     font-family: "0xProto Nerd Font", sans-serif;
     font-size: 13px;
@@ -58,7 +59,7 @@ padding: 0 15px;
 /* Workspaces */
 #workspaces button {
 /* Uses the 'dim' color (color8) for inactive workspaces */
-color: @color8;
+color: @foreground;
 padding: 0 8px;
 }
 
@@ -68,8 +69,21 @@ border-bottom: 2px solid @accent;
 }
 
 /* System info modules */
-#cpu, #memory, #network, #tray, #wireplumber, #clock {
-padding: 0 10px;
-/* Matches the 'foreground' used in the sysinfo popup labels */
+/* System info modules — Reduced padding for a tighter look */
+#cpu,
+#memory,
+#temperature,
+#custom-gpuusage,
+#custom-gputemp,
+#network,
+#tray,
+#wireplumber,
+#clock {
+/* Changed from 10px to 4px to bring them closer together[cite: 18] */
+padding: 0 4px;
 color: @foreground;
 }
+
+
+
+

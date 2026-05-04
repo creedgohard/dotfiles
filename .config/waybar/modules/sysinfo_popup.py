@@ -17,8 +17,8 @@ import json, os, subprocess, glob, argparse
 
 REFRESH_MS = 1200
 WM_CLASS   = 'waybar-sysinfo'
-BAR_H      = 32   # approximate top bar height
-PAD        = 8
+BAR_H      = 28   # approximate top bar height
+PAD        = 0
 
 GLib.set_prgname(WM_CLASS)
 
@@ -252,6 +252,7 @@ class SysInfoPopup(Gtk.Window):
         self.cursor_x = cursor_x
         self.cursor_y = cursor_y
         self.c = get_wal_colors()
+        #toggle_waybar_line(True, "top")
 
         self.set_title(WM_CLASS)
         self.set_wmclass(WM_CLASS, WM_CLASS)
@@ -264,6 +265,7 @@ class SysInfoPopup(Gtk.Window):
         self._apply_css()
 
         self.root = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        self.root.set_size_request(340, -1)
         self.root.set_margin_start(16)
         self.root.set_margin_end(16)
         self.root.set_margin_top(14)
@@ -286,6 +288,7 @@ class SysInfoPopup(Gtk.Window):
 
         GLib.timeout_add(REFRESH_MS, self._refresh)
 
+
     # ── CSS ──────────────────────────────────────────────────────────────────
 
     def _apply_css(self):
@@ -294,7 +297,10 @@ class SysInfoPopup(Gtk.Window):
         window {{
             background-color: {c['background']};
             border: 1px solid {c['accent']};
-            border-radius: 10px;
+            /* This border will overlap the Waybar to create the connector line */
+            border-top: 0px solid {self.c['accent']};
+            margin-top: -2px;
+            border-radius: 0 0 10px 10px; /* Rounded only at the bottom */
         }}
         label {{
             color:       {c['foreground']};
@@ -480,7 +486,7 @@ class SysInfoPopup(Gtk.Window):
         x = max(mon_x + PAD, min(x, mon_x + mon_w - pw - PAD))
 
         # Vertically: just below the top bar
-        y = mon_y + BAR_H + PAD
+        y = mon_y + BAR_H
 
         hypr_move(WM_CLASS, x, y)
         return False

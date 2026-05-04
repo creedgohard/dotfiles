@@ -16,8 +16,8 @@ from gi.repository import Gtk, Gdk, GLib
 import json, os, subprocess, datetime, argparse, sys
 
 WM_CLASS = 'waybar-calendar'
-BAR_H    = 36   # approximate bottom bar height in pixels
-PAD      = 8
+BAR_H    = 28   # approximate bottom bar height in pixels
+PAD      = 0
 
 GLib.set_prgname(WM_CLASS)
 
@@ -143,7 +143,9 @@ class CalendarPopup(Gtk.Window):
         window {{
             background-color: {c['background']};
             border: 1px solid {c['accent']};
-            border-radius: 10px;
+            border-bottom: 0px solid {c['accent']};
+            margin-bottom: -2px;          /* Overlap the bottom bar */
+            border-radius: 10px 10px 0 0; /* Round only the top */
         }}
         calendar {{
             background-color: {c['background']};
@@ -216,6 +218,7 @@ class CalendarPopup(Gtk.Window):
 
     def _build_ui(self):
         outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        outer.set_size_request(280, -1)
         outer.set_margin_start(12)
         outer.set_margin_end(12)
         outer.set_margin_top(10)
@@ -302,6 +305,7 @@ class CalendarPopup(Gtk.Window):
             Gtk.main_quit()
 
     def _on_focus_out(self, *_):
+
         GLib.timeout_add(25, Gtk.main_quit)
 
 
