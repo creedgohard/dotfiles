@@ -56,11 +56,23 @@ color: @accent;
 padding: 0 15px;
 }
 
-/* Workspaces */
+/* Update your workspaces section[cite: 18] */
 #workspaces button {
-/* Uses the 'dim' color (color8) for inactive workspaces */
 color: @foreground;
 padding: 0 8px;
+/* Adding a slight transition prevents the 'flicker' while keeping it responsive[cite: 18] */
+transition: all 0.1s ease-in-out;
+}
+
+#workspaces button.active {
+color: @accent;
+border-bottom: 2px solid @accent;
+/* Ensure the active state has higher priority[cite: 18] */
+background-color: transparent;
+}
+
+#workspaces button.urgent {
+color: #eb4d4b; /* Optional: adds a color for notifications[cite: 18] */
 }
 
 #workspaces button.active {
